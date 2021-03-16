@@ -69,4 +69,10 @@ export class WeightPicker<T> extends Picker<T> {
         }
         return ret;
     }
+
+    protected innerRemove(obj: T, index: number): T | null {
+        const ret = super.innerRemove(obj, index);
+        this.weightMap.delete(obj);
+        return ret;
+    }
 }

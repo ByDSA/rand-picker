@@ -110,6 +110,18 @@ export abstract class Picker<T> {
         return 1;
     }
 
+    remove(obj: T): T | null {
+        const index = this.data.indexOf(obj);
+        if (index !== -1)
+            return this.innerRemove(obj, index);
+
+        return null;
+    }
+
+    protected innerRemove(obj: T, index: number): T | null {
+        return this.data.splice(index, 1)[0];
+    }
+
     get length(): number {
         return this.data.length;
     }
