@@ -1,7 +1,7 @@
-import { AbstractPicker } from "./AbstractPicker";
+import { Picker } from "./Picker";
 import { PickerOptions } from "./PickerOptions";
 
-export class WeightPicker<T> extends AbstractPicker<T> {
+export class WeightPicker<T> extends Picker<T> {
     private weightMap: Map<T, number> = new Map();
 
     throwDart = (dart: number): T | undefined => {
@@ -10,7 +10,7 @@ export class WeightPicker<T> extends AbstractPicker<T> {
 
         const { accumulated, dartTarget } = this.getTargetAtDart(dart);
 
-        if (dartTarget instanceof AbstractPicker)
+        if (dartTarget instanceof Picker)
             return dartTarget.throwDart(dart - accumulated);
         else if (dartTarget)
             return dartTarget;
@@ -50,7 +50,7 @@ export class WeightPicker<T> extends AbstractPicker<T> {
         return size;
     }
 
-    add(obj: T, weight: number = 1): AbstractPicker<T> {
+    add(obj: T, weight: number = 1): Picker<T> {
         super.add(obj);
         weight = Math.max(0, weight);
         this.weightMap.set(obj, weight);
@@ -59,10 +59,10 @@ export class WeightPicker<T> extends AbstractPicker<T> {
     }
 
     getWeight(obj: T): number {
-        return this.weightMap.get(obj) || 1;
+        return this.weightMap.get(obj) || super.getWeight(obj);
     }
 
-    duplicate(options?: PickerOptions): AbstractPicker<T> {
+    duplicate(options?: PickerOptions): Picker<T> {
         const ret = super.duplicate(options);
         if (options?.weighted) {
             (<WeightPicker<T>>ret).weightMap = new Map(this.weightMap);

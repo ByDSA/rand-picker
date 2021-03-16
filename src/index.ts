@@ -1,3 +1,3 @@
-import { create } from "./Picker";
+import { create } from "./CreatePicker";
 
 export { create as Picker };

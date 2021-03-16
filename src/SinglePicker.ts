@@ -1,6 +1,6 @@
-import { AbstractPicker } from "./AbstractPicker";
+import { Picker } from "./Picker";
 
-export class SinglePicker<T> extends AbstractPicker<T> {
+export class SinglePicker<T> extends Picker<T> {
     throwDart = (dart: number): T | undefined => {
         return this.data[dart];
     }

@@ -1,4 +1,4 @@
-import { create } from "./Picker";
+import { create } from "./CreatePicker";
 
 function generatePicker() {
     const picker = create([1, 2, 3, 4, 5, 6], {
