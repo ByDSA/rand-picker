@@ -1,20 +1,27 @@
-import { AbstractPicker, DefaultPickerOptions, PickerOptions } from "./AbstractPicker";
+import { AbstractPicker } from "./AbstractPicker";
+import { DefaultPickerOptions, PickerOptions } from "./PickerOptions";
+import { SinglePicker } from "./SinglePicker";
+import { WeightPicker } from "./WeightPicker";
 
-export class Picker<T> extends AbstractPicker<T> {
-    constructor(data: T[], options: PickerOptions = DefaultPickerOptions) {
-        super(data, options);
+export function create<T = any>(data: T[] = [], options?: PickerOptions): AbstractPicker<T> {
+    options = { ...DefaultPickerOptions, ...options };
+    let picker: AbstractPicker<T>;
 
-        if (options.removeOnPick) {
-            this.onAfterPick = (picked: T): void => {
-                let index: number = this.data.indexOf(picked);
-                if (index === -1)
-                    return;
-
-                this.data.splice(index, 1);
-            }
-        }
+    if (options.weighted) {
+        picker = new WeightPicker<T>(data, options);
+    } else {
+        picker = new SinglePicker<T>(data, options);
     }
-    throwDart(dart: number): T | undefined {
-        return this.data[dart];
+
+    if (options.removeOnPick) {
+        picker.onAfterPick = (picked: T): void => {
+            let index: number = picker.data.indexOf(picked);
+            if (index === -1)
+                return;
+
+            picker.data.splice(index, 1);
+        };
     }
+
+    return picker;
 }

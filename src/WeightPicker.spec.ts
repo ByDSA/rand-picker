@@ -1,9 +1,12 @@
-import { WeightPicker, wrap } from "./WeightPicker";
+import { create } from "./Picker";
 
 function generatePicker() {
-    const data = [1, 2, 3, 4, 5, 6];
-    const weightData = data.map(a => wrap(a, a));
-    const picker = new WeightPicker(weightData);
+    const picker = create([1, 2, 3, 4, 5, 6], {
+        weighted: true
+    });
+
+    for (let i = 1; i <= 6; i++)
+        picker.add(i, i);
 
     return picker;
 }

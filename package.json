@@ -1,15 +1,23 @@
 {
-  "name": "random-picker",
-  "version": "1.0.0",
-  "description": "Random picker of elements",
-  "main": "index.js",
+  "name": "rand-picker",
+  "version": "0.0.0",
+  "description": "A powerful Random Picker of elements with many options.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "picker",
-    "random"
+    "random",
+    "rand",
+    "element",
+    "object",
+    "weighted",
+    "remover",
+    "sequential"
   ],
   "author": "Daniel Sales Álvarez",
   "license": "ISC",

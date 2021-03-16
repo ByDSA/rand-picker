@@ -1,8 +1,10 @@
 import { AbstractPicker } from "./AbstractPicker";
+import { PickerOptions } from "./PickerOptions";
 
-type WeightableMultilevel<T> = Weightable<T> | AbstractPicker<WeightableMultilevel<T>, T>;
-export class WeightPicker<T> extends AbstractPicker<WeightableMultilevel<T>, T> {
-    throwDart(dart: number): T | undefined {
+export class WeightPicker<T> extends AbstractPicker<T> {
+    private weightMap: Map<T, number> = new Map();
+
+    throwDart = (dart: number): T | undefined => {
         if (this.data.length === 0)
             return undefined;
 
@@ -11,19 +13,20 @@ export class WeightPicker<T> extends AbstractPicker<WeightableMultilevel<T>, T> 
         if (dartTarget instanceof AbstractPicker)
             return dartTarget.throwDart(dart - accumulated);
         else if (dartTarget)
-            return dartTarget.get();
+            return dartTarget;
         else
             return undefined;
     }
 
     private getTargetAtDart(dart: number) {
         let accumulated = 0;
-        let dartTarget: WeightableMultilevel<T> | undefined;
+        let dartTarget: T | undefined;
         for (let t of this.data) {
-            accumulated += Math.max(0, t.weight);
+            const tWeight = this.getWeight(t);
+            accumulated += tWeight;
             if (dart < accumulated) {
                 dartTarget = t;
-                accumulated -= t.weight;
+                accumulated -= tWeight;
                 return {
                     dartTarget,
                     accumulated
@@ -40,27 +43,30 @@ export class WeightPicker<T> extends AbstractPicker<WeightableMultilevel<T>, T> 
     get weight(): number {
         let size = 0;
         for (let t of this.data) {
-            size += Math.max(t.weight, 0);
+            const tWeight = this.getWeight(t);
+            size += tWeight;
         }
 
         return size;
     }
-}
 
-export class WeightWrapper<T> {
-    constructor(private _obj: T, public weight: number = 1) {
+    add(obj: T, weight: number = 1): AbstractPicker<T> {
+        super.add(obj);
+        weight = Math.max(0, weight);
+        this.weightMap.set(obj, weight);
+
+        return this;
     }
 
-    get(): T {
-        return this._obj;
+    getWeight(obj: T): number {
+        return this.weightMap.get(obj) || 1;
     }
-}
 
-export function wrap<T>(e: T, weight: number = 1) {
-    return new WeightWrapper(e, weight);
-}
-
-export interface Weightable<T> {
-    weight: number;
-    get(): T;
+    duplicate(options?: PickerOptions): AbstractPicker<T> {
+        const ret = super.duplicate(options);
+        if (options?.weighted) {
+            (<WeightPicker<T>>ret).weightMap = new Map(this.weightMap);
+        }
+        return ret;
+    }
 }
