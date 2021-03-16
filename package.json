@@ -1,7 +1,7 @@
 {
   "name": "rand-picker",
-  "version": "0.0.0",
-  "description": "A powerful Random Picker of elements with many options.",
+  "version": "1.0.0",
+  "description": "A powerful Random Picker of elements with many options. Easy to use.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
