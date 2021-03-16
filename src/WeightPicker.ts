@@ -50,8 +50,8 @@ export class WeightPicker<T> extends Picker<T> {
         return size;
     }
 
-    add(obj: T, weight: number = 1): Picker<T> {
-        super.add(obj);
+    put(obj: T, weight: number = 1): Picker<T> {
+        super.put(obj);
         weight = Math.max(0, weight);
         this.weightMap.set(obj, weight);
 

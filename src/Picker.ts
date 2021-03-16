@@ -37,7 +37,7 @@ export abstract class Picker<T> {
 
     abstract get weight(): number;
 
-    add(element: T, weight: number = 1): Picker<T> {
+    put(element: T, weight: number = 1): Picker<T> {
         if (!this.data.includes(element))
             this.data.push(element);
         return this;
@@ -108,5 +108,9 @@ export abstract class Picker<T> {
 
     getWeight(obj: T): number {
         return 1;
+    }
+
+    get length(): number {
+        return this.data.length;
     }
 }

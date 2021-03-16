@@ -6,7 +6,7 @@ function generatePicker() {
     });
 
     for (let i = 1; i <= 6; i++)
-        picker.add(i, i);
+        picker.put(i, i);
 
     return picker;
 }
