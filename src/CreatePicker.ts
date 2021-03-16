@@ -14,7 +14,7 @@ export function create<T = any>(data: T[] = [], options?: PickerOptions): Picker
     }
 
     if (options.removeOnPick) {
-        picker.onAfterPick = (picked: T): void => {
+        (<any>picker).onAfterPick = (picked: T): void => {
             let index: number = picker.data.indexOf(picked);
             if (index === -1)
                 return;

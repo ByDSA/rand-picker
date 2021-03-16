@@ -7,7 +7,7 @@ export abstract class Picker<T> {
         Object.freeze(options);
     }
 
-    onAfterPick: ((t: T) => void) | undefined;
+    protected onAfterPick: ((t: T) => void) | undefined;
 
     abstract throwDart: (dart: number) => T | undefined;
 
@@ -46,7 +46,13 @@ export abstract class Picker<T> {
     pick(n: number = 1, options: PickOptions = DefaultPickOptions): (T)[] {
         options = { ...DefaultPickOptions, ...options };
 
-        let ret: T[];
+        if (n === 1)
+            if (this.length > 0)
+                return [<T>this.pickOne()];
+            else
+                return [];
+
+        let ret: (T)[];
         if (this.options.removeOnPick && !options.sequential) {
             ret = this._pickNormal(n);
         } else {
@@ -60,7 +66,8 @@ export abstract class Picker<T> {
 
             if (this.onAfterPick)
                 for (let r of ret)
-                    this.onAfterPick(r);
+                    if (r)
+                        this.onAfterPick(r);
         }
 
         return ret;
@@ -77,7 +84,7 @@ export abstract class Picker<T> {
         return ret;
     }
 
-    private _innerPickUnique(n: number) {
+    private _innerPickUnique(n: number): T[] {
         let pickerTmp = this.duplicate({
             removeOnPick: true
         });
