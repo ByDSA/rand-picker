@@ -1,5 +1,5 @@
 # rand-picker
-A powerful Random Picker of elements with many options. Easy to use.
+A powerful Random newPicker of elements with many options. Easy to use.
 
 - - -
 ## How to use
@@ -11,13 +11,13 @@ npm i rand-picker
 
 Import:
 ```js
-import { Picker } from "rand-picker";
+import { newPicker } from "rand-picker";
 ```
 
 Create a new picker:
 ```js
 let data = [1, 2, 3, 4, 5, 6];
-let picker = Picker(data);
+let picker = newPicker(data);
 ```
 
 Pick a random element:
@@ -33,7 +33,7 @@ let element3 = picker.pick(40); // Picks 40 random elements
 
 Remove element after to be picked:
 ```js
-let picker2 = Picker(data, {
+let picker2 = newPicker(data, {
     removeOnPick: true
 });
 picker2.pick(2);
@@ -44,7 +44,7 @@ console.log(data.length); // 4
 
 Weighted picker:
 ```js
-let picker3 = Picker(['A', 'B'], {
+let picker3 = newPicker(['A', 'B'], {
     weighted: true
 };
 picker.put('A', 25); // Edits weight of 'A' to 25
