@@ -113,8 +113,11 @@ export abstract class Picker<T> {
         return create(newData, newOptions);
     }
 
-    getWeight(obj: T): number {
-        return 1;
+    getWeight(obj: T): number | undefined {
+        if (this.data.includes(obj))
+            return 1;
+        else
+            return undefined;
     }
 
     remove(obj: T): T | null {

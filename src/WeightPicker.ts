@@ -2,7 +2,13 @@ import { Picker } from "./Picker";
 import { PickerOptions } from "./PickerOptions";
 
 export class WeightPicker<T> extends Picker<T> {
-    private weightMap: Map<T, number> = new Map();
+    private weightMap: Map<T, number>;
+
+    constructor(public data: T[], protected options: PickerOptions) {
+        super(data, options);
+        this.weightMap = new Map();
+        Object.freeze(this.weightMap);
+    }
 
     throwDart = (dart: number): T | undefined => {
         if (this.data.length === 0)
@@ -22,7 +28,7 @@ export class WeightPicker<T> extends Picker<T> {
         let accumulated = 0;
         let dartTarget: T | undefined;
         for (let t of this.data) {
-            const tWeight = this.getWeight(t);
+            const tWeight = <number>this.getWeight(t);
             accumulated += tWeight;
             if (dart < accumulated) {
                 dartTarget = t;
@@ -43,7 +49,7 @@ export class WeightPicker<T> extends Picker<T> {
     get weight(): number {
         let size = 0;
         for (let t of this.data) {
-            const tWeight = this.getWeight(t);
+            const tWeight = <number>this.getWeight(t);
             size += tWeight;
         }
 
@@ -58,8 +64,12 @@ export class WeightPicker<T> extends Picker<T> {
         return this;
     }
 
-    getWeight(obj: T): number {
-        return this.weightMap.get(obj) || super.getWeight(obj);
+    getWeight(obj: T): number | undefined {
+        let ret = this.weightMap.get(obj);
+        if (ret === undefined && this.data.includes(obj))
+            ret = 1;
+
+        return ret;
     }
 
     duplicate(options?: PickerOptions): Picker<T> {
