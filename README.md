@@ -12,6 +12,8 @@ A powerful Random Picker of elements with many options. Easy to use.
 - - -
 ## How to use
 
+### Basics
+
 Install:
 ```bash
 npm install rand-picker
@@ -71,8 +73,9 @@ picker.put('C', 50); // Add 'C' and puts its height to 50
 
 > _Note 2: added weights does nothing if 'weighted' option is not enabled._
 
-Options on pick:
-* unique:
+### Options on pick
+
+- unique:
 ```js
 picker.pick(5, {
     unique: true
@@ -84,7 +87,7 @@ let elements = picker.pick(10, {
 }); // tries to get 10 unique elements
 console.log(elements.length); // 6. 'data' has only 6 unique values
 ```
-* sequential:
+- sequential:
 ```js
 picker.pick(2, {
     sequential: true
@@ -92,7 +95,7 @@ picker.pick(2, {
 ```
 > _Note: both options can be combined._
 
-Other functions:
+### Other functions
 ```js
 picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated element for that number.
 
@@ -108,5 +111,36 @@ picker.remove(obj) // Removes 'obj' from picker and returns it
 ```
 
 > _Note: if weights are not enabled, it takes all them as 1 for weight-related functions._
+
+### Picker inside another picker
+```js
+let innerPicker = create([], {
+    weighted: true
+})
+.put('B', 2)    // Prob = 2/5 (inside this picker)
+.put('C', 3);   // Prob = 3/5 (inside this picker)
+
+let innerPicker2 = create([], {
+    weighted: true
+})
+.put('D', 3)    // Prob = 3/10 (inside this picker)
+.put('E', 7);   // Prob = 7/10 (inside this picker)
+
+let picker = create([], {
+    weighted: true
+})
+.put('A')               // Prob = 1/21
+.put(innerPicker, 10)   // Prob = 10/21
+.put(innerPicker2, 10)  // Prob = 10/21
+
+let darts = Array.from(Array(21).keys()); // 0, 1, ..., 20
+let distribution = darts.map(i => picker.throwDart(i));
+console.log(distribution);
+// 'A',                                 => Prob(A) = 1/21
+// 'B', 'B', 'B', 'B',                  => Prob(B) = 4/21
+// 'C', 'C', 'C', 'C', 'C', 'C',        => Prob(C) = 6/21
+// 'D', 'D', 'D',                       => Prob(D) = 3/21
+// 'E', 'E', 'E', 'E', 'E', 'E', 'E'    => Prob(E) = 7/21
+```
 - - -
 Daniel Sales Álvarez. 2021.

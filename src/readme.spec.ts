@@ -1,4 +1,5 @@
 import { newPicker, Picker } from ".";
+import { create } from "./CreatePicker";
 
 function newPickerSample() {
     let data = [1, 2, 3, 4, 5, 6];
@@ -83,4 +84,35 @@ it('options on pick: sequential', () => {
         [5, 6],
     ];
     expect(possibilities).toContainEqual(ret)
+});
+
+it('picker inside another picker', () => {
+    let innerPicker = create([], {
+        weighted: true
+    })
+        .put('B', 2)
+        .put('C', 3);
+    let innerPicker2 = create([], {
+        weighted: true
+    })
+        .put('D', 3)
+        .put('E', 7);
+
+    let picker = create([], {
+        weighted: true
+    })
+        .put('A')
+        .put(innerPicker, 10)
+        .put(innerPicker2, 10)
+
+    const darts = Array.from(Array(21).keys()); // 0, 1, ..., 20
+    const distribution = darts.map(i => picker.throwDart(i));
+    const expected = [
+        'A',
+        'B', 'B', 'B', 'B',
+        'C', 'C', 'C', 'C', 'C', 'C',
+        'D', 'D', 'D',
+        'E', 'E', 'E', 'E', 'E', 'E', 'E'
+    ]
+    expect(distribution).toEqual(expected);
 });
