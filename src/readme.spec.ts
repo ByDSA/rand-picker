@@ -87,18 +87,18 @@ it('options on pick: sequential', () => {
 });
 
 it('picker inside another picker', () => {
-    let innerPicker = create([], {
+    let innerPicker = create<string>([], {
         weighted: true
     })
         .put('B', 2)
         .put('C', 3);
-    let innerPicker2 = create([], {
+    let innerPicker2 = create<string>([], {
         weighted: true
     })
         .put('D', 3)
         .put('E', 7);
 
-    let picker = create([], {
+    let picker = create<string | Picker<string>>([], {
         weighted: true
     })
         .put('A')
