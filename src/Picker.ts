@@ -3,8 +3,12 @@ import { PickerOptions } from "./PickerOptions";
 import { DefaultPickOptions, PickOptions } from "./PickOptions";
 
 export abstract class Picker<T> {
-    constructor(public data: T[], protected options: PickerOptions) {
+    constructor(protected _data: T[], protected options: PickerOptions) {
         Object.freeze(options);
+    }
+
+    get data(): Readonly<T[]> {
+        return this._data;
     }
 
     protected onAfterPick: ((t: T) => void) | undefined;
@@ -38,8 +42,8 @@ export abstract class Picker<T> {
     abstract get weight(): number;
 
     put(element: T, weight: number = 1): Picker<T> {
-        if (!this.data.includes(element))
-            this.data.push(element);
+        if (!this._data.includes(element))
+            this._data.push(element);
         return this;
     }
 
@@ -58,19 +62,22 @@ export abstract class Picker<T> {
         } else {
             if (options.unique) {
                 ret = this._innerPickUnique(n);
+                this._callOnAfterPickIfDefined(ret);
             } else if (options.sequential) {
                 ret = this._innerPickSequential(n);
+                this._callOnAfterPickIfDefined(ret);
             } else {
                 ret = this._pickNormal(n);
             }
-
-            if (this.onAfterPick)
-                for (let r of ret)
-                    if (r)
-                        this.onAfterPick(r);
         }
 
         return ret;
+    }
+
+    private _callOnAfterPickIfDefined(ret: T[]) {
+        if (this.onAfterPick)
+            for (let r of ret)
+                this.onAfterPick(r);
     }
 
     private _pickNormal(n: number) {
@@ -94,45 +101,49 @@ export abstract class Picker<T> {
 
     private _innerPickSequential(n: number): T[] {
         let ret: T[] = [];
-        if (this.data.length <= n) {
-            ret = [...this.data];
+        if (this._data.length <= n) {
+            ret = [...this._data];
         } else {
             const pickerTmp = this.duplicate();
-            pickerTmp.data.splice(this.data.length - n);
+            pickerTmp._data.splice(this._data.length - n);
             const picked = <T>pickerTmp._innerPickOne();
-            const index = this.data.indexOf(picked);
-            ret = this.data.slice(index, index + n);
+            const index = this._data.indexOf(picked);
+            ret = this._data.slice(index, index + n);
         }
 
         return ret;
     }
 
     duplicate(options?: PickerOptions): Picker<T> {
-        const newData = [...this.data];
+        const newData = [...this._data];
         const newOptions = { ...this.options, ...options };
         return create(newData, newOptions);
     }
 
     getWeight(obj: T): number | undefined {
-        if (this.data.includes(obj))
+        if (this._data.includes(obj))
             return 1;
         else
             return undefined;
     }
 
     remove(obj: T): T | null {
-        const index = this.data.indexOf(obj);
+        const index = this._data.indexOf(obj);
         if (index !== -1)
             return this.innerRemove(obj, index);
 
         return null;
     }
 
+    clear() {
+        while (this._data.splice(0, 1).length > 0);
+    }
+
     protected innerRemove(obj: T, index: number): T | null {
-        return this.data.splice(index, 1)[0];
+        return this._data.splice(index, 1)[0];
     }
 
     get length(): number {
-        return this.data.length;
+        return this._data.length;
     }
 }

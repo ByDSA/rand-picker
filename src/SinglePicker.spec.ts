@@ -87,3 +87,75 @@ it("picker sequential", () => {
         expect(p[0]).toBeLessThanOrEqual(p[1]);
     }
 })
+
+it('if already has a value', () => {
+    const picker = create(['A', 'B']);
+    const initial = picker.data[0];
+    picker.put(initial);
+    expect(picker.length).toBe(2);
+    const current = picker.data[0];
+
+    expect(current).toBe(initial);
+});
+
+it('remove element', () => {
+    const picker = create(['A', 'B']);
+    expect(picker.data.includes('A')).toBeTruthy();
+    const ret = picker.remove('A');
+    expect(ret).toBe('A');
+    expect(picker.data.includes('A')).toBeFalsy();
+});
+
+it('remove element - not found', () => {
+    const picker = create(['A', 'B']);
+    expect(picker.data.includes('C')).toBeFalsy();
+    const ret = picker.remove('C');
+    expect(ret).toBeNull();
+    expect(picker.data.includes('C')).toBeFalsy();
+});
+
+it('getWeight', () => {
+    const picker = createSample();
+    const w = picker.getWeight(3);
+    expect(w).toBe(1);
+});
+
+it('getWeight - element not found', () => {
+    const picker = createSample();
+    const w = picker.getWeight(7);
+    expect(w).toBeUndefined();
+});
+
+it('custom on afterpick', () => {
+    const picker = createSample();
+    let counter = 0;
+    (<any>picker).onAfterPick = (e: number) => {
+        counter++;
+    }
+
+    picker.pick(123);
+    expect(counter).toBe(123);
+});
+
+it('throwDart', () => {
+    const picker = createSample();
+    const ret = picker.throwDart(3);
+    expect(ret).toBe(4);
+});
+
+it('throwDart - if invalid value', () => {
+    const picker = createSample();
+    const ret = picker.throwDart(7);
+    expect(ret).toBeUndefined();
+});
+it('throwDart - if data empty', () => {
+    const picker = create([]);
+    const ret = picker.throwDart(0);
+    expect(ret).toBeUndefined();
+});
+
+it('clear', () => {
+    const picker = createSample();
+    picker.clear();
+    expect(picker.length).toBe(0);
+});

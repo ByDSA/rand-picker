@@ -15,14 +15,14 @@ it(`picked number disappears from picker`, () => {
     const picked = picker.pickOne();
 
     expect(picker.data).not.toContain(picked);
-    expect(picker.data.length).toBe(5);
+    expect(picker.length).toBe(5);
 });
 
 it(`pick all`, () => {
     const picker = createSample();
 
     const picked = picker.pick(data.length);
-    expect(picker.data.length).toBe(0);
+    expect(picker.length).toBe(0);
 });
 
 it(`pick more than all`, () => {
@@ -31,7 +31,7 @@ it(`pick more than all`, () => {
     picker.pick(data.length);
     const picked = picker.pickOne();
     expect(picked).toBeUndefined();
-    expect(picker.data.length).toBe(0);
+    expect(picker.length).toBe(0);
 });
 
 it("picker unique", () => {
@@ -71,3 +71,27 @@ it("picker sequential", () => {
         expect(p[0]).toBeLessThanOrEqual(p[1]);
     }
 })
+
+it('pick if picker is empty', () => {
+    const picker = createSample();
+    picker.pick(6);
+    expect(picker.length).toBe(0);
+    const ret = picker.pick();
+    expect(ret).toEqual([]);
+});
+
+it('pickOne if picker is empty', () => {
+    const picker = createSample();
+    picker.pick(6);
+    expect(picker.length).toBe(0);
+    const ret = picker.pickOne();
+    expect(ret).toBeUndefined();
+});
+
+it('pick if picker has only one item', () => {
+    const picker = createSample();
+    picker.pick(5);
+    expect(picker.length).toBe(1);
+    const ret = picker.pick();
+    expect(ret).toBeDefined();
+});

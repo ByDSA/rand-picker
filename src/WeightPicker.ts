@@ -4,21 +4,24 @@ import { PickerOptions } from "./PickerOptions";
 export class WeightPicker<T> extends Picker<T> {
     private weightMap: Map<T, number>;
 
-    constructor(public data: T[], protected options: PickerOptions) {
-        super(data, options);
+    constructor(_data: T[], options: PickerOptions) {
+        super(_data, options);
         this.weightMap = new Map();
         Object.freeze(this.weightMap);
     }
 
     throwDart = (dart: number): T | undefined => {
-        if (this.data.length === 0)
+        if (this._data.length === 0)
             return undefined;
 
         const { accumulated, dartTarget } = this.getTargetAtDart(dart);
 
-        if (dartTarget instanceof Picker)
-            return dartTarget.throwDart(dart - accumulated);
-        else if (dartTarget)
+        if (dartTarget instanceof Picker) {
+            const externalWeight = <number>this.getWeight(dartTarget);
+            const internalWeight = dartTarget.weight;
+            const fixedDart = Math.floor((dart - accumulated) / externalWeight * internalWeight);
+            return dartTarget.throwDart(fixedDart);
+        } else if (dartTarget !== undefined)
             return dartTarget;
         else
             return undefined;
@@ -27,7 +30,7 @@ export class WeightPicker<T> extends Picker<T> {
     private getTargetAtDart(dart: number) {
         let accumulated = 0;
         let dartTarget: T | undefined;
-        for (let t of this.data) {
+        for (let t of this._data) {
             const tWeight = <number>this.getWeight(t);
             accumulated += tWeight;
             if (dart < accumulated) {
@@ -48,7 +51,7 @@ export class WeightPicker<T> extends Picker<T> {
 
     get weight(): number {
         let size = 0;
-        for (let t of this.data) {
+        for (let t of this._data) {
             const tWeight = <number>this.getWeight(t);
             size += tWeight;
         }
@@ -66,17 +69,17 @@ export class WeightPicker<T> extends Picker<T> {
 
     getWeight(obj: T): number | undefined {
         let ret = this.weightMap.get(obj);
-        if (ret === undefined && this.data.includes(obj))
+        if (ret === undefined && this._data.includes(obj))
             ret = 1;
 
         return ret;
     }
 
     duplicate(options?: PickerOptions): Picker<T> {
+        let opts = { ...this.options, ...options };
         const ret = super.duplicate(options);
-        if (options?.weighted) {
+        if (opts.weighted)
             (<WeightPicker<T>>ret).weightMap = new Map(this.weightMap);
-        }
         return ret;
     }
 
