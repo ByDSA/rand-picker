@@ -3,3 +3,5 @@ tsconfig.json
 jest.config.js
 src/
 node_modules
+.travis.yml
+coverage
