@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "test:coverage": "jest --coverage && coveralls < coverage/lcov.info",
+    "test:coverage": "jest --coverage",
     "build": "rm -rf dist && tsc",
     "prepublish": "npm run test && npm run build"
   },
