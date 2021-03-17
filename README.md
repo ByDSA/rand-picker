@@ -2,11 +2,9 @@
 
 [![NPM version](http://img.shields.io/npm/v/rand-picker.svg)](https://www.npmjs.com/package/rand-picker)
 [![CI](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml/badge.svg)](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/ByDSA/rand-picker)
-
-![GitHub](https://img.shields.io/github/license/bydsa/rand-picker)
-
 [![Coverage Status](https://coveralls.io/repos/github/ByDSA/rand-picker/badge.svg?branch=main)](https://coveralls.io/github/ByDSA/rand-picker?branch=main)
+![GitHub top language](https://img.shields.io/github/languages/top/ByDSA/rand-picker)
+![GitHub](https://img.shields.io/github/license/bydsa/rand-picker)
 
 A powerful Random newPicker of elements with many options. Easy to use.
 
