@@ -98,6 +98,13 @@ it('duplicate - opt: weight=false', () => {
     expect(picker2.getWeight(2)).toBe(1);
 });
 
+it('put - without weight', () => {
+    const picker = createSample();
+    picker.put(7);
+    expect(picker.getWeight(7)).toBe(1);
+    expect(picker.data.includes(7)).toBeTruthy();
+});
+
 it('remove', () => {
     const picker = createSample();
     picker.remove(2);

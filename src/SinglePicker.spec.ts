@@ -159,3 +159,8 @@ it('clear', () => {
     picker.clear();
     expect(picker.length).toBe(0);
 });
+
+it('create without params', () => {
+    const picker = create();
+    expect(picker.data).toEqual([]);
+});

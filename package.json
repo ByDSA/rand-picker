@@ -1,6 +1,6 @@
 {
   "name": "rand-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A powerful Random Picker of elements with many options. Easy to use.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "sequential"
   ],
   "author": "Daniel Sales Álvarez",
-  "license": "ISC",
+  "license": "GPLv3",
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "coveralls": "^3.1.0",
