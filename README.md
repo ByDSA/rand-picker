@@ -2,7 +2,7 @@
 
 [![NPM version](http://img.shields.io/npm/v/rand-picker.svg)](https://www.npmjs.com/package/rand-picker)
 [![CI](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml/badge.svg)](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/ByDSA/rand-picker/badge.svg?branch=main&service=github)](https://coveralls.io/github/ByDSA/rand-picker?branch=main)
+[![codecov](https://codecov.io/gh/ByDSA/rand-picker/branch/main/graph/badge.svg?token=RIJ2K00E5J)](https://codecov.io/gh/ByDSA/rand-picker)
 ![GitHub top language](https://img.shields.io/github/languages/top/ByDSA/rand-picker)
 ![NPM](https://img.shields.io/npm/l/rand-picker)
 [![Generic badge](https://img.shields.io/badge/GitHub-rand--picker-orange.svg?logo=github)](https://github.com/ByDSA/rand-picker)
