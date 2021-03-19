@@ -7,18 +7,24 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "rm -rf dist && tsc",
-    "prepublish": "npm run test && npm run build"
+    "build": "tsc",
+    "prebuild": "npm run clean && npm rebuild && npm test",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean"
   },
   "keywords": [
     "picker",
     "random",
     "rand",
     "element",
+    "item",
     "object",
     "weighted",
     "remover",
-    "sequential"
+    "sequential",
+    "recursive",
+    "typescript"
   ],
   "author": "Daniel Sales Álvarez",
   "license": "GPLv3",

@@ -14,7 +14,7 @@ A powerful Random Picker of elements with many options. Easy to use.
 
 ### Basics
 
-Install:
+Install (npm):
 ```bash
 npm install rand-picker
 ```
