@@ -4,15 +4,8 @@ import { DefaultPickOptions, PickOptions } from "./PickOptions";
 
 export abstract class Picker<T> {
     /** @internal */
-    protected _data;
-
-    /** @internal */
-    protected options: Readonly<PickerOptions>;
-
-    /** @internal */
-    constructor(data: T[], options: PickerOptions) {
-        this._data = data;
-        this.options = Object.freeze(options);
+    constructor(protected _data: T[], protected options: PickerOptions) {
+        Object.freeze(options);
     }
 
     get data(): Readonly<T[]> {

@@ -14,5 +14,7 @@
     "excludeExternals": true,
     "excludeInternal": true,
     "excludePrivate": true,
+    "excludeProtected": true,
+    "includeVersion": true,
     "disableOutputCheck": true
 }
