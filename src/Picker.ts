@@ -3,14 +3,23 @@ import { PickerOptions } from "./PickerOptions";
 import { DefaultPickOptions, PickOptions } from "./PickOptions";
 
 export abstract class Picker<T> {
-    constructor(protected _data: T[], protected options: PickerOptions) {
-        Object.freeze(options);
+    /** @internal */
+    protected _data;
+
+    /** @internal */
+    protected options: Readonly<PickerOptions>;
+
+    /** @internal */
+    constructor(data: T[], options: PickerOptions) {
+        this._data = data;
+        this.options = Object.freeze(options);
     }
 
     get data(): Readonly<T[]> {
         return this._data;
     }
 
+    /** @internal */
     protected onAfterPick: ((t: T) => void) | undefined;
 
     abstract throwDart: (dart: number) => T | undefined;
@@ -139,6 +148,7 @@ export abstract class Picker<T> {
         while (this._data.splice(0, 1).length > 0);
     }
 
+    /** @internal */
     protected innerRemove(obj: T, index: number): T | null {
         return this._data.splice(index, 1)[0];
     }
