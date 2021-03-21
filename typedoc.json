@@ -1,0 +1,17 @@
+{
+    "entryPoints": [
+        "./src/index.ts"
+    ],
+    "out": "docs",
+    "readme": "none",
+    "exclude": [
+        "**/__tests__/**/*",
+        "**/__test_utils__/**/*",
+        "**/__fixtures__/**/*",
+        "**/testsuite/**/*"
+    ],
+    "theme": "./node_modules/typedoc-github-wiki-theme/dist",
+    "excludeExternals": true,
+    "excludePrivate": true,
+    "disableOutputCheck": true
+}

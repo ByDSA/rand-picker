@@ -1,6 +1,6 @@
 {
   "name": "rand-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A powerful Random Picker of elements with many options. Easy to use.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,10 @@
     "prebuild": "npm run clean && npm rebuild && npm test",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run build",
-    "postpublish": "npm run clean"
+    "postpublish": "npm run clean",
+    "docs:clean": "rm -rf docs/*.md",
+    "docs": "npm run docs:clean && typedoc",
+    "postdocs": "echo ©$(date +'%Y') $(cat package.json | grep \\\"author\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g') > docs/_Footer.md"
   },
   "keywords": [
     "picker",
@@ -28,11 +31,19 @@
   ],
   "author": "Daniel Sales Álvarez",
   "license": "GPLv3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByDSA/rand-picker.git"
+  },
+  "homepage": "https://github.com/ByDSA/rand-picker#readme",
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.3",
     "tslib": "^2.1.0",
+    "typedoc": "^0.20.32",
+    "typedoc-github-wiki-theme": "^0.2.0",
+    "typedoc-plugin-markdown": "^3.6.0",
     "typescript": "^4.2.3"
   }
 }

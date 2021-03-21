@@ -7,6 +7,8 @@
 
 A powerful Random Picker of elements with many options. Easy to use.
 
+Read [docs](https://github.com/ByDSA/rand-picker/wiki).
+
 - - -
 ## How to use
 
@@ -52,6 +54,7 @@ Remove element after to be picked:
 let picker = newPicker(data, {
     removeOnPick: true
 });
+console.log(picker.length); // 6
 picker.pick(2);
 console.log(picker.length); // 4
 console.log(data.length); // 4
@@ -65,7 +68,7 @@ let picker = newPicker(['A', 'B'], {
 });
 picker.put('A', 25); // Edits weight of 'A' to 25
 picker.put('B', 25); // Edits weight of 'B' to 25
-picker.put('C', 50); // Add 'C' and puts its height to 50
+picker.put('C', 50); // Adds 'C' and puts its height to 50
 ```
 > _Note: it's not necessary to sum up 100, weights are relative about the elements._
 
@@ -95,17 +98,17 @@ picker.pick(2, {
 
 ### Other functions
 ```js
-picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated element for that number.
-
 picker.weight // Returns total picker weights
 
-picker.length // Return data length
+picker.length // Returns data length
 
 picker.getWeight(obj) // Returns the assigned weight for 'obj'
 
-picker.duplicate(options?) // Return a picker copy, with a new data and weight arrays
+picker.duplicate(options?) // Returns a picker copy, with a new data and weight arrays
 
 picker.remove(obj) // Removes 'obj' from picker and returns it
+
+picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated element for that number.
 ```
 
 > _Note: if weights are not enabled, it takes all them as 1 for weight-related functions._
