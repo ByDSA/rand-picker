@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "tsc",
     "prebuild": "npm run clean && npm rebuild && npm test",
@@ -34,6 +35,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ByDSA/rand-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ByDSA/rand-picker/issues"
   },
   "homepage": "https://github.com/ByDSA/rand-picker#readme",
   "devDependencies": {
