@@ -4,6 +4,6 @@
 
 - Add Random Secure option in PickerOptions.
 
-## 1.0.0 - 1.0.3
+## 1.0.0 - 1.0.2
 
 - First release
