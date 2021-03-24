@@ -1,9 +1,9 @@
 export type PickOptions = {
-    unique?: boolean;
-    sequential?: boolean;
-}
+  unique?: boolean;
+  sequential?: boolean;
+};
 
 export const DefaultPickOptions: PickOptions = {
-    unique: false,
-    sequential: false
-}
+  unique: false,
+  sequential: false,
+};

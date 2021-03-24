@@ -1,13 +1,12 @@
-import { Picker } from "./Picker";
+import AbstractPicker from "./Picker";
 
-export class SinglePicker<T> extends Picker<T> {
-    throwDart = (dart: number): T | undefined => {
-        return this._data[dart];
-    }
+export default class SinglePicker<T> extends AbstractPicker<T> {
+  throwDart = (dart: number): T | undefined => this.innerData[dart];
 
-    onAfterPick: ((t: T) => void) | undefined;
+  // eslint-disable-next-line no-unused-vars
+  onAfterPick: ((t: T) => void) | undefined;
 
-    get weight(): number {
-        return this._data.length;
-    }
+  get weight(): number {
+    return this.innerData.length;
+  }
 }
