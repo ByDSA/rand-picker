@@ -1,6 +1,8 @@
+import seedRandom from "seed-random";
 import create from "./CreatePicker";
 import { PickerOptions } from "./PickerOptions";
 import { DefaultPickOptions, PickOptions } from "./PickOptions";
+import { RandomMode } from "./RandomMode";
 
 export default abstract class Picker<T> {
   /** @internal */
@@ -39,7 +41,11 @@ export default abstract class Picker<T> {
   }
 
   private innerGenerateDart() {
-    return Math.floor(Math.random() * this.weight);
+    const randomZeroToOneNumber =
+      this.options.randomMode === RandomMode.SECURE
+        ? seedRandom()()
+        : Math.random();
+    return Math.floor(randomZeroToOneNumber * this.weight);
   }
 
   abstract get weight(): number;

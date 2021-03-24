@@ -129,27 +129,37 @@ picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determin
 
 > _Note: if weights are not enabled, it takes all them as 1 for weight-related functions._
 
+### Secure random
+
+```js
+const picker = newPicker(data, {
+  randomMode: RandomMode.SECURE,
+});
+
+const picked = picker.pick(6);
+```
+
 ### Picker inside another picker
 
 ```js
-const innerPicker = create([], {
+const innerPicker = newPicker([], {
   weighted: true,
 })
-  .put("B", 2) // Prob = 2/5 (inside this picker)
-  .put("C", 3); // Prob = 3/5 (inside this picker)
+  .put("B", 2) //   Prob = 2/5 (inside this picker)
+  .put("C", 3); //  Prob = 3/5 (inside this picker)
 
-const innerPicker2 = create([], {
+const innerPicker2 = newPicker([], {
   weighted: true,
 })
-  .put("D", 3) // Prob = 3/10 (inside this picker)
-  .put("E", 7); // Prob = 7/10 (inside this picker)
+  .put("D", 3) //   Prob = 3/10 (inside this picker)
+  .put("E", 7); //  Prob = 7/10 (inside this picker)
 
-const picker = create([], {
+const picker = newPicker([], {
   weighted: true,
 })
-  .put("A") // Prob = 1/21
-  .put(innerPicker, 10) // Prob = 10/21
-  .put(innerPicker2, 10); // Prob = 10/21
+  .put("A") //                Prob = 1/21
+  .put(innerPicker, 10) //    Prob = 10/21
+  .put(innerPicker2, 10); //  Prob = 10/21
 
 const darts = Array.from(Array(21).keys()); // 0, 1, ..., 20
 const distribution = darts.map((i) => picker.throwDart(i));

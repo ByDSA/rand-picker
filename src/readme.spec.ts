@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { newPicker, Picker } from ".";
+import create from "./CreatePicker";
+import { RandomMode } from "./RandomMode";
 
 function newPickerSample() {
   const data = [1, 2, 3, 4, 5, 6];
@@ -131,4 +133,12 @@ it("picker inside another picker", () => {
     "E",
   ];
   expect(distribution).toEqual(expected);
+});
+
+it("random secure", () => {
+  const picker = create([1, 2, 3, 4, 5, 6], {
+    randomMode: RandomMode.SECURE,
+  });
+
+  const picked = picker.pick(6);
 });
