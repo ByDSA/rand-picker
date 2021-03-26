@@ -92,12 +92,12 @@ picker.put("C", 50); // Adds 'C' and puts its height to 50
 ```js
 picker.pick(5, {
   unique: true,
-}); // gets 5 unique elements
-console.log(data.length); // 6. Don't modify data array
+}); // Gets 5 unique elements
+console.log(data.length); // 6. Doesn't modify data array
 
 const elements = picker.pick(10, {
   unique: true,
-}); // tries to get 10 unique elements
+}); // Tries to get 10 unique elements
 console.log(elements.length); // 6. 'data' has only 6 unique values
 ```
 
@@ -106,7 +106,7 @@ console.log(elements.length); // 6. 'data' has only 6 unique values
 ```js
 picker.pick(2, {
   sequential: true,
-}); // gets a pair of sequential elements: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
+}); // Gets a pair of sequential elements: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
 ```
 
 > _Note: both options can be combined._
@@ -173,4 +173,4 @@ console.log(distribution);
 
 ---
 
-©2021 Daniel Sales Álvarez
+©2021 Daniel Sales Álvarez <danisales.es@gmail.com>
