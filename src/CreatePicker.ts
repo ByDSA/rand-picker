@@ -1,9 +1,9 @@
-import Picker from "./Picker";
+import { Picker } from "./Picker";
 import { DefaultPickerOptions, PickerOptions } from "./PickerOptions";
-import SinglePicker from "./SinglePicker";
-import WeightPicker from "./WeightPicker";
+import { SinglePicker } from "./SinglePicker";
+import { WeightPicker } from "./WeightPicker";
 
-export default function create<T = any>(
+export function create<T = any>(
   data: T[] = [],
   options?: PickerOptions,
 ): Picker<T> {

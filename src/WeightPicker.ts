@@ -1,7 +1,7 @@
-import Picker from "./Picker";
+import { Picker } from "./Picker";
 import { PickerOptions } from "./PickerOptions";
 
-export default class WeightPicker<T> extends Picker<T> {
+export class WeightPicker<T> extends Picker<T> {
   private weightMap: Map<T, number>;
 
   constructor(_data: T[], options: PickerOptions) {

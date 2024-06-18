@@ -1,10 +1,10 @@
 import seedRandom from "seed-random";
-import create from "./CreatePicker";
+import { create } from "./CreatePicker";
 import { DefaultPickOptions, PickOptions } from "./PickOptions";
 import { PickerOptions } from "./PickerOptions";
 import { RandomMode } from "./RandomMode";
 
-export default abstract class Picker<T> {
+export abstract class Picker<T> {
   /** @internal */
 
   constructor(
