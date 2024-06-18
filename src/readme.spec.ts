@@ -1,4 +1,4 @@
-import create from "./CreatePicker";
+import { create } from "./CreatePicker";
 import { RandomMode } from "./RandomMode";
 import { newPicker, Picker } from ".";
 

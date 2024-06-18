@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import create from "./CreatePicker";
+import { create } from "./CreatePicker";
 import { PickOptions } from "./PickOptions";
 
 const data = [1, 2, 3, 4, 5, 6];

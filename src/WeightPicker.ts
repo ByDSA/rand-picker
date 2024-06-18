@@ -57,6 +57,7 @@ export class WeightPicker<T> extends Picker<T> {
     };
   }
 
+  // eslint-disable-next-line accessor-pairs
   get weight(): number {
     let size = 0;
 

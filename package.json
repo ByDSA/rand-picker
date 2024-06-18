@@ -57,7 +57,7 @@
     "lint:fix": "eslint ./src/*.ts --fix",
     "postdocs": "lib/docs/generate_footer.sh",
     "postpublish": "pnpm clean",
-    "prebuild": "pnpm lint:fix &&p npm clean && pnpm rebuild && pnpm test",
+    "prebuild": "pnpm lint:fix && pnpm clean && pnpm rebuild && pnpm test",
     "prepublishOnly": "pnpm build",
     "test": "jest",
     "test:coverage": "jest --coverage",

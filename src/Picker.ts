@@ -1,4 +1,5 @@
 import seedRandom from "seed-random";
+// eslint-disable-next-line import/no-cycle
 import { create } from "./CreatePicker";
 import { DefaultPickOptions, PickOptions } from "./PickOptions";
 import { PickerOptions } from "./PickerOptions";
@@ -14,6 +15,7 @@ export abstract class Picker<T> {
     Object.freeze(options);
   }
 
+  // eslint-disable-next-line accessor-pairs
   get data(): Readonly<T[]> {
     return this.innerData;
   }
@@ -171,6 +173,7 @@ export abstract class Picker<T> {
     return this.innerData.splice(index, 1)[0];
   }
 
+  // eslint-disable-next-line accessor-pairs
   get length(): number {
     return this.innerData.length;
   }
