@@ -4,5 +4,6 @@ src/
 node_modules/
 coverage/
 docs/
+wiki/
 ./typedoc.json
 *spec.js

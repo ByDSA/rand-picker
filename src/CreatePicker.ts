@@ -1,20 +1,22 @@
-import Picker from "./Picker";
+import { Picker } from "./Picker";
 import { DefaultPickerOptions, PickerOptions } from "./PickerOptions";
-import SinglePicker from "./SinglePicker";
-import WeightPicker from "./WeightPicker";
+import { SinglePicker } from "./SinglePicker";
+import { WeightPicker } from "./WeightPicker";
 
-export default function create<T = any>(
+export function create<T = any>(
   data: T[] = [],
-  options?: PickerOptions
+  options?: PickerOptions,
 ): Picker<T> {
-  const currentOptions = { ...DefaultPickerOptions, ...options };
+  const currentOptions = {
+    ...DefaultPickerOptions,
+    ...options,
+  };
   let picker: Picker<T>;
 
-  if (currentOptions.weighted) {
+  if (currentOptions.weighted)
     picker = new WeightPicker<T>(data, currentOptions);
-  } else {
+  else
     picker = new SinglePicker<T>(data, currentOptions);
-  }
 
   if (currentOptions.removeOnPick) {
     (<any>picker).onAfterPick = (picked: T): void => {
