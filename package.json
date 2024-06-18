@@ -1,71 +1,68 @@
 {
-  "name": "rand-picker",
-  "version": "1.1.0",
-  "description": "A powerful Random Picker of elements with many options. Easy to use.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "build": "tsc",
-    "prebuild": "npm run lint:fix && npm run clean && npm rebuild && npm test",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "npm run build",
-    "postpublish": "npm run clean",
-    "docs:clean": "rm -rf docs/*.md",
-    "docs": "npm run lint:fix && npm run docs:clean && typedoc",
-    "postdocs": "echo ©$(date +'%Y') $(cat package.json | grep \\\"author\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g') > docs/_Footer.md",
-    "lint:eslint": "eslint ./src/*.ts",
-    "lint:prettier": "prettier ./src/*.ts",
-    "lint:fix": "prettier --write ./src/*.ts && eslint ./src/*.ts --fix"
+  "author": "Daniel Sales Álvarez",
+  "bugs": {
+    "url": "https://github.com/ByDSA/rand-picker/issues"
   },
+  "dependencies": {
+    "seed-random": "2.2.0"
+  },
+  "description": "A powerful Random Picker of elements with many options. Easy to use.",
+  "devDependencies": {
+    "@stylistic/eslint-plugin-ts": "2.2.1",
+    "@types/jest": "29.5.12",
+    "@types/seed-random": "2.2.4",
+    "@typescript-eslint/eslint-plugin": "7.13.1",
+    "@typescript-eslint/parser": "7.13.1",
+    "eslint": "9.5.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jest": "28.6.0",
+    "jest": "29.7.0",
+    "ts-jest": "29.1.5",
+    "tslib": "2.6.3",
+    "typedoc": "0.25.13",
+    "typedoc-github-wiki-theme": "2.0.0",
+    "typedoc-plugin-markdown": "4.0.3",
+    "typescript": "5.4.5"
+  },
+  "email": "danisales.es@gmail.com",
+  "homepage": "https://github.com/ByDSA/rand-picker#readme",
   "keywords": [
-    "picker",
-    "random",
-    "rand",
     "element",
     "item",
     "object",
-    "weighted",
+    "picker",
+    "rand",
+    "random",
+    "recursive",
     "remover",
     "sequential",
-    "recursive",
-    "typescript"
+    "typescript",
+    "weighted"
   ],
-  "author": "Daniel Sales Álvarez",
-  "email": "danisales.es@gmail.com",
   "license": "GPLv3",
+  "main": "dist/index.js",
+  "name": "rand-picker",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ByDSA/rand-picker.git"
   },
-  "bugs": {
-    "url": "https://github.com/ByDSA/rand-picker/issues"
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "docs": "pnpm run docs:clean && typedoc",
+    "docs:clean": "rm -rf docs/*.md",
+    "lint:eslint": "eslint ./src/*.ts",
+    "lint:fix": "eslint ./src/*.ts --fix",
+    "postdocs": "echo ©$(date +'%Y') $(cat package.json | grep \\\"author\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g') > docs/_Footer.md",
+    "postpublish": "pnpm clean",
+    "prebuild": "pnpm lint:fix &&p npm clean && pnpm rebuild && pnpm test",
+    "prepublishOnly": "pnpm build",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
-  "homepage": "https://github.com/ByDSA/rand-picker#readme",
-  "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@types/seed-random": "^2.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.2",
-    "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "ts-jest": "^26.5.3",
-    "tslib": "^2.1.0",
-    "typedoc": "^0.20.32",
-    "typedoc-github-wiki-theme": "^0.2.0",
-    "typedoc-plugin-markdown": "^3.6.0",
-    "typescript": "^4.2.3"
-  },
-  "dependencies": {
-    "seed-random": "^2.2.0"
-  }
+  "types": "dist/index.d.ts",
+  "version": "1.1.0"
 }
