@@ -1,47 +1,46 @@
-import { create } from "./CreatePicker";
-import { RandomMode } from "./RandomMode";
-import { newPicker, Picker } from ".";
+import { weightPickerThrowDart } from "./WeightPicker";
+import { Picker, RandomMode, WeightPicker } from ".";
 
 function newPickerSample() {
   const data = [1, 2, 3, 4, 5, 6];
-  const picker = newPicker(data);
+  const picker = new Picker(data);
 
   return picker;
 }
 
 it("create a new picker", () => {
   const data = [1, 2, 3, 4, 5, 6];
-  const picker = newPicker(data);
+  const picker = new Picker(data);
 
   expect(picker).toBeDefined();
 } );
 
 it("typing", () => {
   const data: number[] = [1, 2, 3, 4, 5, 6];
-  const picker: Picker<number> = newPicker(data);
+  const picker: Picker<number> = new Picker(data);
 
   expect(picker).toBeDefined();
 } );
 
-it("pick a random element", () => {
+it("pick a random item", () => {
   const picker = newPickerSample();
-  const element1 = picker.pickOne();
-  const [element2] = picker.pick();
+  const item1 = picker.pickOne();
+  const [item2] = picker.pick();
 
-  expect(element1).toBeDefined();
-  expect(element2).toBeDefined();
+  expect(item1).toBeDefined();
+  expect(item2).toBeDefined();
 } );
 
-it("pick multiple elements", () => {
+it("pick multiple items", () => {
   const picker = newPickerSample();
-  const elements = picker.pick(40); // Picks 40 random elements
+  const items = picker.pick(40); // Picks 40 random items
 
-  expect(elements.length).toBe(40);
+  expect(items.length).toBe(40);
 } );
 
-it("remove element after to be picked", () => {
+it("remove item after to be picked", () => {
   const data: number[] = [1, 2, 3, 4, 5, 6];
-  const picker = newPicker(data, {
+  const picker = new Picker(data, {
     removeOnPick: true,
   } );
 
@@ -51,9 +50,7 @@ it("remove element after to be picked", () => {
 } );
 
 it("weighted picker", () => {
-  const picker = newPicker(["A", "B"], {
-    weighted: true,
-  } );
+  const picker = new WeightPicker(["A", "B"]);
 
   expect(picker.getWeight("A")).toBe(1);
   picker.put("A", 25); // Edits weight of 'A' to 25
@@ -68,26 +65,26 @@ it("weighted picker", () => {
 
 it("options on pick: unique", () => {
   const data = [1, 2, 3, 4, 5, 6];
-  const picker = newPicker(data);
+  const picker = new Picker(data);
   const ret = picker.pick(5, {
     unique: true,
-  } ); // gets 5 unique elements
+  } ); // gets 5 unique items
 
   expect(ret.length).toBe(5);
   expect(data.length).toBe(6); // 6. Don't modify data array
 
-  const elements = picker.pick(10, {
+  const items = picker.pick(10, {
     unique: true,
-  } ); // tries to get 10 unique elements
+  } ); // tries to get 10 unique items
 
-  expect(elements.length).toBe(6); // 6. 'data' has only 6 unique values
+  expect(items.length).toBe(6); // 6. 'data' has only 6 unique values
 } );
 
 it("options on pick: sequential", () => {
   const picker = newPickerSample();
   const ret = picker.pick(2, {
     sequential: true,
-  } ); // gets a pair of sequential elements: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
+  } ); // gets a pair of sequential items: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
   const possibilities = [
     [1, 2],
     [2, 3],
@@ -100,24 +97,22 @@ it("options on pick: sequential", () => {
 } );
 
 it("picker inside another picker", () => {
-  const innerPicker = newPicker<string>([], {
-    weighted: true,
-  } )
+  const innerPicker = new WeightPicker<string>([])
     .put("B", 2)
     .put("C", 3);
-  const innerPicker2 = newPicker<string>([], {
-    weighted: true,
-  } )
+  const innerPicker2 = new WeightPicker<string>([])
     .put("D", 3)
     .put("E", 7);
-  const picker = newPicker<Picker<string> | string>([], {
-    weighted: true,
-  } )
+  const picker = new WeightPicker<WeightPicker<string> | string>([])
     .put("A")
     .put(innerPicker, 10)
     .put(innerPicker2, 10);
   const darts = Array.from(Array(21).keys()); // 0, 1, ..., 20
-  const distribution = darts.map((i) => picker.throwDart(i));
+  const distribution = darts.map((i) => weightPickerThrowDart( {
+    dart: i,
+    data: picker.data,
+    getWeight: picker.getWeight.bind(picker),
+  } ));
   const expected = [
     "A",
     "B",
@@ -146,7 +141,7 @@ it("picker inside another picker", () => {
 } );
 
 it("random secure", () => {
-  const picker = create([1, 2, 3, 4, 5, 6], {
+  const picker = new Picker([1, 2, 3, 4, 5, 6], {
     randomMode: RandomMode.SECURE,
   } );
   const picked = picker.pick(6);

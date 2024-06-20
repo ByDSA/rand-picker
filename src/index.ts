@@ -1,11 +1,15 @@
-import { create } from "./CreatePicker";
-import { Picker } from "./Picker";
 import { PickerOptions } from "./PickerOptions";
 import { PickOptions } from "./PickOptions";
+import { RandomMode } from "./RandomMode";
+import { SimplePicker, simplePickerThrowDart } from "./SimplePicker";
+import { WeightPicker, weightPickerThrowDart } from "./WeightPicker";
 
 export {
-  create as newPicker,
-  Picker,
+  SimplePicker as Picker,
   PickerOptions,
   PickOptions,
+  RandomMode,
+  simplePickerThrowDart as throwDart,
+  WeightPicker,
+  weightPickerThrowDart,
 };

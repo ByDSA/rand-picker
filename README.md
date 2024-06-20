@@ -5,7 +5,7 @@
 [![CI](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml/badge.svg)](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/ByDSA/rand-picker/branch/main/graph/badge.svg?token=RIJ2K00E5J)](https://codecov.io/gh/ByDSA/rand-picker)
 
-A powerful Random Picker of elements with many options. Easy to use.
+A powerful Random Picker of items with many options. Easy to use.
 
 Read [docs](https://github.com/ByDSA/rand-picker/wiki).
 
@@ -24,14 +24,14 @@ npm install rand-picker
 Import (ES Modules):
 
 ```js
-import { newPicker } from "rand-picker";
+import { Picker } from "rand-picker";
 ```
 
 Create a new picker:
 
 ```js
 const data = [1, 2, 3, 4, 5, 6];
-const picker = newPicker(data);
+const picker = new Picker(data);
 ```
 
 Typing (TypeScript):
@@ -40,26 +40,26 @@ Typing (TypeScript):
 import { newPicker, Picker } from "rand-picker";
 
 const data: number[] = [1, 2, 3, 4, 5, 6];
-const picker: Picker<number> = newPicker(data);
+const picker: Picker<number> = new Picker(data);
 ```
 
-Pick a random element:
+Pick a random item:
 
 ```js
-const element1 = picker.pickOne();
-const [element2] = picker.pick();
+const item1 = picker.pickOne();
+const [item2] = picker.pick();
 ```
 
-Pick multiple elements:
+Pick multiple items:
 
 ```js
-const elements = picker.pick(40); // Picks 40 random elements
+const items = picker.pick(40); // Picks 40 random items
 ```
 
-Remove element after to be picked:
+Remove item after to be picked:
 
 ```js
-const picker = newPicker(data, {
+const picker = new Picker(data, {
   removeOnPick: true,
 });
 console.log(picker.length); // 6
@@ -73,15 +73,15 @@ console.log(data.length); // 4
 Weighted picker:
 
 ```js
-const picker = newPicker(["A", "B"], {
-  weighted: true,
-});
+import { WeightPicker } from ".";
+
+const picker = new WeightPicker(["A", "B"]);
 picker.put("A", 25); // Edits weight of 'A' to 25
 picker.put("B", 25); // Edits weight of 'B' to 25
 picker.put("C", 50); // Adds 'C' and puts its height to 50
 ```
 
-> _Note: it's not necessary to sum up 100, weights are relative about the elements._
+> _Note: it's not necessary to sum up 100, weights are relative about the items._
 
 > _Note 2: added weights does nothing if 'weighted' option is not enabled._
 
@@ -92,13 +92,13 @@ picker.put("C", 50); // Adds 'C' and puts its height to 50
 ```js
 picker.pick(5, {
   unique: true,
-}); // Gets 5 unique elements
+}); // Gets 5 unique items
 console.log(data.length); // 6. Doesn't modify data array
 
-const elements = picker.pick(10, {
+const items = picker.pick(10, {
   unique: true,
-}); // Tries to get 10 unique elements
-console.log(elements.length); // 6. 'data' has only 6 unique values
+}); // Tries to get 10 unique items
+console.log(items.length); // 6. 'data' has only 6 unique values
 ```
 
 - sequential:
@@ -106,7 +106,7 @@ console.log(elements.length); // 6. 'data' has only 6 unique values
 ```js
 picker.pick(2, {
   sequential: true,
-}); // Gets a pair of sequential elements: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
+}); // Gets a pair of sequential items: [1, 2], [2, 3], [3, 4], [4, 5] or [5, 6]
 ```
 
 > _Note: both options can be combined._
@@ -124,7 +124,7 @@ picker.duplicate(options?) // Returns a picker copy, with a new data and weight 
 
 picker.remove(obj) // Removes 'obj' from picker and returns it
 
-picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated element for that number.
+picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated item for that number.
 ```
 
 > _Note: if weights are not enabled, it takes all them as 1 for weight-related functions._
@@ -132,7 +132,7 @@ picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determin
 ### Secure random
 
 ```js
-const picker = newPicker(data, {
+const picker = new Picker(data, {
   randomMode: RandomMode.SECURE,
 });
 
@@ -142,27 +142,26 @@ const picked = picker.pick(6);
 ### Picker inside another picker
 
 ```js
-const innerPicker = newPicker([], {
-  weighted: true,
-})
+const innerPicker = new WeightPicker([])
   .put("B", 2) //   Prob = 2/5 (inside this picker)
   .put("C", 3); //  Prob = 3/5 (inside this picker)
 
-const innerPicker2 = newPicker([], {
-  weighted: true,
-})
+const innerPicker2 = new WeightPicker([])
   .put("D", 3) //   Prob = 3/10 (inside this picker)
   .put("E", 7); //  Prob = 7/10 (inside this picker)
 
-const picker = newPicker([], {
-  weighted: true,
-})
+const picker = new WeightPicker([])
   .put("A") //                Prob = 1/21
   .put(innerPicker, 10) //    Prob = 10/21
   .put(innerPicker2, 10); //  Prob = 10/21
 
 const darts = Array.from(Array(21).keys()); // 0, 1, ..., 20
-const distribution = darts.map((i) => picker.throwDart(i));
+const dartProcess = new WeightPickerDartProcess();
+const distribution = darts.map((i) => dartProcess.throwDart( {
+    dart: i,
+    data: picker.data,
+    getWeight: picker.getWeight.bind(picker),
+  } ));
 console.log(distribution);
 // 'A',                                 => Prob(A) = 1/21
 // 'B', 'B', 'B', 'B',                  => Prob(B) = 4/21

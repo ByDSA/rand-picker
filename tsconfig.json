@@ -7,35 +7,19 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "inlineSources": true,
-    "lib": [
-      "dom",
-      "ES2023"
-    ],
+    "lib": ["dom", "ES2022"],
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./dist",
     "sourceMap": true,
     "strict": true,
-    "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "strictNullChecks": true,
+    "target": "ES2016",
+    "typeRoots": ["node_modules/@types"]
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "dist",
-    "node_modules"
-  ],
-  "filesGlob": [
-    "src/**/*.ts"
-  ],
-  "include": [
-    "src/**/*.ts"
-  ],
-  "typeRoots": [
-    "../node_modules/@types"
-  ],
-  "types": [
-    "node"
-  ]
+  "exclude": ["**/*.spec.ts", "**/tests?", "dist", "node_modules"],
+  "filesGlob": ["src/**/*.ts"],
+  "include": ["src/**/*.ts"],
+  "typeRoots": ["../node_modules/@types"],
+  "types": ["node"]
 }
