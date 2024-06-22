@@ -1,4 +1,4 @@
-import { RandomMode } from "./RandomMode";
+import { RandomMode } from "./random";
 
 export type PickerOptions = {
   removeOnPick?: boolean;

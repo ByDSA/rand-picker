@@ -1,7 +1,7 @@
 import { PickOptions } from "../PickOptions";
 import { PickerOptions } from "../PickerOptions";
 import { ThrowDartFn } from "../ThrowDartFn";
-import { generateRandomInteger } from "../random-number-generation";
+import { generateRandomInteger } from "../random";
 
 export type PickProcessProps<T, TD extends ThrowDartFn<T>> = {
   n: number;

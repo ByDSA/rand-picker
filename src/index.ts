@@ -1,6 +1,6 @@
 import { PickerOptions } from "./PickerOptions";
 import { PickOptions } from "./PickOptions";
-import { RandomMode } from "./RandomMode";
+import { RandomMode } from "./random";
 import { SimplePicker, simplePickerThrowDart } from "./SimplePicker";
 import { WeightPicker, weightPickerThrowDart } from "./WeightPicker";
 
