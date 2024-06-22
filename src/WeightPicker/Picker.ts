@@ -6,6 +6,7 @@ import { SimplePicker, SimplePickerPickProcess } from "../SimplePicker";
 import { Filter } from "../filters";
 // eslint-disable-next-line import/no-cycle
 import { throwDart } from "./ThrowDart";
+import { WeightFixer } from "./weight-fixers";
 
 export class Picker<T>
 implements CanPick<T>, CanRemove<T> {
@@ -31,6 +32,17 @@ implements CanPick<T>, CanRemove<T> {
     } );
 
     return removed;
+  }
+
+  fixWeights(...fixers: WeightFixer<T>[]): void {
+    for (const d of this.#simplePicker.data) {
+      let newWeight = this.getWeight(d) as number;
+
+      for (const fixer of fixers)
+        newWeight = fixer(d, newWeight);
+
+      this.put(d, newWeight);
+    }
   }
 
   onAfterPick: ((t: T)=> void) | undefined;
