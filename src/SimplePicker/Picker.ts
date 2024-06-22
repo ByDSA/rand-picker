@@ -1,12 +1,11 @@
-import { CanPick } from "../CanPick";
-import { CanRemove } from "../CanRemove";
 import { DefaultPickOptions, PickOptions } from "../PickOptions";
+import { Picker as IPicker } from "../Picker";
 import { DefaultPickerOptions, PickerOptions } from "../PickerOptions";
 import { Filter } from "../filters";
 import { PickProcess } from "./PickProcess";
 import { throwDart } from "./ThrowDart";
 
-export class Picker<T> implements CanPick<T>, CanRemove<T> {
+export class Picker<T> implements IPicker<T> {
   #options: Required<PickerOptions>;
 
   /** @internal */

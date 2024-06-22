@@ -1,15 +1,12 @@
-import { CanPick } from "../CanPick";
-import { CanRemove } from "../CanRemove";
 import { DefaultPickOptions, PickOptions } from "../PickOptions";
+import { Picker as IPicker } from "../Picker";
 import { PickerOptions } from "../PickerOptions";
 import { SimplePicker, SimplePickerPickProcess } from "../SimplePicker";
 import { Filter } from "../filters";
 // eslint-disable-next-line import/no-cycle
 import { throwDart } from "./ThrowDart";
 import { WeightFixer } from "./weight-fixers";
-
-export class Picker<T>
-implements CanPick<T>, CanRemove<T> {
+export class Picker<T> implements IPicker<T> {
   #simplePicker: SimplePicker<T>;
 
   /** @internal */
@@ -22,6 +19,16 @@ implements CanPick<T>, CanRemove<T> {
     this.weightMap = Object.freeze(new Map());
 
     this.#simplePicker = new SimplePicker(innerData, options);
+  }
+
+  // eslint-disable-next-line accessor-pairs
+  get length(): number {
+    return this.#simplePicker.length;
+  }
+
+  // eslint-disable-next-line accessor-pairs
+  get options(): Readonly<Required<PickerOptions>> {
+    return this.#simplePicker.options;
   }
 
   filter(...filters: Filter<T>[]): T[] {

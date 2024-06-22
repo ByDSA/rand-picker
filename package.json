@@ -6,7 +6,7 @@
   "dependencies": {
     "seed-random": "2.2.0"
   },
-  "description": "A powerful Random Picker of items with many options. Easy to use.",
+  "description": "A versatile random item picker library for JavaScript. Supports weighted and non-weighted items, multiple chained filters for both added items and pick operations, single or multiple item selection, sequential and unique picking options, weight modifiers, and item removal after picking. Ideal for complex selection scenarios in games, simulations, or data processing applications.",
   "devDependencies": {
     "@stylistic/eslint-plugin-ts": "2.2.1",
     "@types/jest": "29.5.12",
@@ -29,16 +29,14 @@
   "email": "danisales.es@gmail.com",
   "homepage": "https://github.com/ByDSA/rand-picker#readme",
   "keywords": [
-    "element",
+    "filters",
     "item",
-    "object",
     "picker",
-    "rand",
     "random",
     "recursive",
     "remover",
     "sequential",
-    "typescript",
+    "unique",
     "weighted"
   ],
   "license": "GPLv3",
@@ -57,12 +55,12 @@
     "lint:fix": "eslint ./src/*.ts --fix",
     "postdocs": "lib/docs/generate_footer.sh",
     "postpublish": "pnpm clean",
-    "prebuild": "pnpm lint:fix && pnpm clean && pnpm rebuild && pnpm test",
-    "prepublishOnly": "pnpm build",
+    "prebuild": "pnpm lint:fix && pnpm clean && pnpm rebuild",
+    "prepublishOnly": "pnpm test && pnpm build",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
   "types": "dist/index.d.ts",
-  "version": "2.0.0"
+  "version": "2.1.0"
 }

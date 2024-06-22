@@ -12,7 +12,7 @@ it("should keep only 1", () => {
   expect(picker.data).toEqual([1]);
 } );
 
-it("should keep only odd numbers", () => {
+it("should keep only even numbers", () => {
   const picker = pickerNumbers1();
   const removed = picker.filter((r => r % 2 === 0));
 
@@ -20,7 +20,7 @@ it("should keep only odd numbers", () => {
   expect(picker.data).toEqual([2, 4, 6]);
 } );
 
-it("should keep only odd numbers greater than 3", () => {
+it("should keep only even numbers greater than 3", () => {
   const picker = pickerNumbers1();
   const removed = picker.filter(
     (r => r % 2 === 0),

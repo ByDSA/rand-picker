@@ -1,6 +1,6 @@
 import { pickerNumbers1 } from "./fixtures";
 
-it("should keep only odd numbers", () => {
+it("should keep only even numbers", () => {
   const picker = pickerNumbers1();
   const picked = picker.pick(200, {
     filters: [
@@ -12,7 +12,7 @@ it("should keep only odd numbers", () => {
     expect(p % 2).toBe(0);
 } );
 
-it("should keep only odd numbers greather than 3", () => {
+it("should keep only even numbers greather than 3", () => {
   const picker = pickerNumbers1();
   const picked = picker.pick(200, {
     filters: [

@@ -5,7 +5,7 @@
 [![CI](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml/badge.svg)](https://github.com/ByDSA/rand-picker/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/ByDSA/rand-picker/branch/main/graph/badge.svg?token=RIJ2K00E5J)](https://codecov.io/gh/ByDSA/rand-picker)
 
-A powerful Random Picker of items with many options. Easy to use.
+A versatile random item picker library for JavaScript. Supports weighted and non-weighted items, multiple chained filters for both added items and pick operations, single or multiple item selection, sequential and unique picking options, weight modifiers, and item removal after picking. Ideal for complex selection scenarios in games, simulations, or data processing applications.
 
 Read [docs](https://github.com/ByDSA/rand-picker/wiki).
 
@@ -14,11 +14,14 @@ Read [docs](https://github.com/ByDSA/rand-picker/wiki).
 ## How to use
 
 ### Basics
-
-Install (npm):
+Install:
 
 ```bash
 npm install rand-picker
+```
+or
+```bash
+pnpm install rand-picker
 ```
 
 Import (ES Modules):
@@ -37,7 +40,7 @@ const picker = new Picker(data);
 Typing (TypeScript):
 
 ```ts
-import { newPicker, Picker } from "rand-picker";
+import { Picker } from "rand-picker";
 
 const data: number[] = [1, 2, 3, 4, 5, 6];
 const picker: Picker<number> = new Picker(data);
@@ -70,21 +73,64 @@ console.log(data.length); // 4
 
 > _Warning: picker mutates 'data' parameter._
 
-Weighted picker:
-
+Apply filters to picker:
 ```js
-import { WeightPicker } from ".";
+const picker = new Picker([1, 2, 3, 4, 5, 6]);
+const removed = picker.filter(
+    (r => r % 2 === 0), // Keeps only even numbers
+    (r => r > 3), // Keeps only numbers greater than 3
+  );
+picker.data // -> [4, 6]
+removed // -> [1, 2, 3, 5]
+```
+
+Apply filters on pick:
+```js
+const picker = new Picker([1, 2, 3, 4, 5, 6]);
+
+const picked = picker.pick(4, {
+  filters: [
+    (r => r % 2 === 0), // Keeps only even numbers
+    (r => r > 3), // Keeps only numbers greater than 3
+  ],
+});
+picked // 4 numbers, all of them are 4 or 6
+picker.data // [1, 2, 3, 4, 5, 6]. Data not modified
+```
+
+### Weighted picker
+```js
+import { WeightPicker } from "rand-picker";
 
 const picker = new WeightPicker(["A", "B"]);
-picker.put("A", 25); // Edits weight of 'A' to 25
-picker.put("B", 25); // Edits weight of 'B' to 25
-picker.put("C", 50); // Adds 'C' and puts its height to 50
+
+picker.getWeight("A"); // Returns 1
+picker.weight; // Returns 2
+
+picker.put("A", 25); // Replace weight of 'A' with 25
+picker.put("B", 25); // Replace weight of 'B' with 25
+picker.put("C", 50); // Put 'C' with weight = 50
+
+picker.getWeight("A"); // Returns 25
+picker.weight; // Returns 100
 ```
 
 > _Note: it's not necessary to sum up 100, weights are relative about the items._
 
-> _Note 2: added weights does nothing if 'weighted' option is not enabled._
+Weight Fixers:
+```js
+const picker = new WeightPicker(["A", "B"]);
+picker.put("A", 1);
+picker.put("B", 2);
 
+picker.fixWeights(
+  (item, weight) => weight * 2, // Doubles all weights
+  (item, weight) => weight + 1 // Adds 1 to all weights
+);
+
+picker.getWeight("A"); // Returns 3, because 1*2 + 1
+picker.getWeight("B"); // Returns 5, because 2*2 + 1
+```
 ### Options on pick
 
 - unique:
@@ -114,20 +160,15 @@ picker.pick(2, {
 ### Other functions
 
 ```js
-picker.weight // Returns total picker weights
+picker.data // Returns data array (mutable)
 
 picker.length // Returns data length
 
-picker.getWeight(obj) // Returns the assigned weight for 'obj'
+picker.remove(obj) // Removes 'obj' from picker and returns it
 
 picker.duplicate(options?) // Returns a picker copy, with a new data and weight arrays
 
-picker.remove(obj) // Removes 'obj' from picker and returns it
-
-picker.throwDart(num); // Gives 'num' between 0 and weight, returns the determinated item for that number.
 ```
-
-> _Note: if weights are not enabled, it takes all them as 1 for weight-related functions._
 
 ### Secure random
 
@@ -172,4 +213,4 @@ console.log(distribution);
 
 ---
 
-©2021 Daniel Sales Álvarez <danisales.es@gmail.com>
+©2024 Daniel Sales Álvarez <danisales.es@gmail.com>
