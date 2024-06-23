@@ -1,4 +1,4 @@
-import { Filter } from "./filters";
+import { Filter } from "./Filter";
 
 export interface CanRemove<T> {
   remove(obj: T): T | undefined;

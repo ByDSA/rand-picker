@@ -1,4 +1,4 @@
-import { pickerStrings1 } from "../tests/fixtures";
+import { pickerStrings1 } from "../../WeightPicker/tests/fixtures";
 import { maxWeightFilter } from "./WeightFilter";
 
 describe.each([

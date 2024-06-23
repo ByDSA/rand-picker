@@ -1,8 +1,4 @@
 export {
-  Filter,
-} from "./Filter";
-
-export {
   createDependencyIdFilterGenerator as dependencyIdFilter,
 } from "./DependencyIdFilter";
 

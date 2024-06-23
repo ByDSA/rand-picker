@@ -1,4 +1,4 @@
-import { Picker } from "../Picker";
+import { Picker } from "../../WeightPicker/Picker";
 
 type FilterFn<R> = (resource: R, weight: number)=> boolean;
 export const createWeightFilter = <R>(

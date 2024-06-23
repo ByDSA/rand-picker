@@ -1,4 +1,4 @@
-import { Filter } from "./filters";
+import { Filter } from "./Filter";
 
 export type PickOptions<T> = {
   unique?: boolean;

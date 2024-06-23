@@ -1,4 +1,4 @@
-import { WeightFixer } from "./WeightFixer";
+import { WeightFixer } from "../WeightFixer";
 
 export const createMaxWeightFixer: (maxWeight: number)=> WeightFixer<unknown> = (
   maxWeight: number,

@@ -1,11 +1,12 @@
+import { Filter } from "../Filter";
 import { DefaultPickOptions, PickOptions } from "../PickOptions";
 import { Picker as IPicker } from "../Picker";
 import { PickerOptions } from "../PickerOptions";
 import { SimplePicker, SimplePickerPickProcess } from "../SimplePicker";
-import { Filter } from "../filters";
+import { WeightFixer } from "../WeightFixer";
 // eslint-disable-next-line import/no-cycle
 import { throwDart } from "./ThrowDart";
-import { WeightFixer } from "./weight-fixers";
+
 export class Picker<T> implements IPicker<T> {
   #simplePicker: SimplePicker<T>;
 

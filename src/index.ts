@@ -1,15 +1,19 @@
+import { Filter } from "./Filter";
+import { Picker } from "./Picker";
 import { PickerOptions } from "./PickerOptions";
 import { PickOptions } from "./PickOptions";
 import { RandomMode } from "./random";
-import { SimplePicker, simplePickerThrowDart } from "./SimplePicker";
-import { WeightPicker, weightPickerThrowDart } from "./WeightPicker";
+import { SimplePicker } from "./SimplePicker";
+import { WeightFixer } from "./WeightFixer";
+import { WeightPicker } from "./WeightPicker";
 
 export {
+  Filter,
+  Picker as IPicker,
   SimplePicker as Picker,
   PickerOptions,
   PickOptions,
   RandomMode,
-  simplePickerThrowDart as throwDart,
+  WeightFixer,
   WeightPicker,
-  weightPickerThrowDart,
 };

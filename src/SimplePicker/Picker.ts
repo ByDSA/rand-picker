@@ -1,7 +1,7 @@
+import { Filter } from "../Filter";
 import { DefaultPickOptions, PickOptions } from "../PickOptions";
 import { Picker as IPicker } from "../Picker";
 import { DefaultPickerOptions, PickerOptions } from "../PickerOptions";
-import { Filter } from "../filters";
 import { PickProcess } from "./PickProcess";
 import { throwDart } from "./ThrowDart";
 
