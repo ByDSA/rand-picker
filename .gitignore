@@ -1,5 +1,6 @@
-dist/
+/dist/
 node_modules/
-coverage/
-docs/
-wiki/
+/coverage/
+/docs/
+/wiki/
+/*.wiki/
