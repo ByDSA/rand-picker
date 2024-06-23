@@ -27,6 +27,24 @@
     "typescript": "5.4.5"
   },
   "email": "danisales.es@gmail.com",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./filters": {
+      "import": "./dist/filters/index.js",
+      "types": "./dist/filters/index.d.ts"
+    },
+    "./weight-picker/filters": {
+      "import": "./dist/WeightPicker/filters/index.js",
+      "types": "./dist/WeightPicker/filters/index.d.ts"
+    },
+    "./weight-picker/weight-fixers": {
+      "import": "./dist/WeightPicker/weight-fixers/index.js",
+      "types": "./dist/WeightPicker/weight-fixers/index.d.ts"
+    }
+  },
   "homepage": "https://github.com/ByDSA/rand-picker#readme",
   "keywords": [
     "filters",
