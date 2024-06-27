@@ -10,7 +10,7 @@ type ThisThrowDartParams<T> = ThrowDartParams<T> & {
 };
 
 const throwDart = <T, R = T>( { data, dart, getWeight }: ThisThrowDartParams<T>): R | undefined => {
-  if (data.length === 0)
+  if (data.length === 0 || dart < 0)
     return undefined;
 
   const { accumulated, dartTarget } = getTargetAtDart(dart, data, getWeight);

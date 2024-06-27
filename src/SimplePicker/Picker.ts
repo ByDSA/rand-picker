@@ -56,6 +56,7 @@ export class Picker<T> implements IPicker<T> {
       options: currentPickOptions,
       pickerOptions: this.#options,
       throwDart: throwDart,
+      getMaxDartInteger: ()=>this.innerData.length,
     } );
     const ret = pickProcess.pick();
 

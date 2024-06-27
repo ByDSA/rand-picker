@@ -3,12 +3,15 @@ import { DefaultPickOptions, PickOptions } from "../PickOptions";
 import { Picker as IPicker } from "../Picker";
 import { PickerOptions } from "../PickerOptions";
 import { SimplePicker, SimplePickerPickProcess } from "../SimplePicker";
+import { GetMaxDartInteger } from "../SimplePicker/PickProcess";
 import { WeightFixer } from "../WeightFixer";
 // eslint-disable-next-line import/no-cycle
 import { throwDart } from "./ThrowDart";
 
 export class Picker<T> implements IPicker<T> {
   #simplePicker: SimplePicker<T>;
+
+  #precalcWeight: number | undefined;
 
   /** @internal */
   private weightMap: Map<T, number>;
@@ -36,6 +39,9 @@ export class Picker<T> implements IPicker<T> {
     const removed = this.#simplePicker.filter(...filters);
 
     removed.forEach((r) => {
+      if (this.#precalcWeight !== undefined)
+        this.#precalcWeight -= this.getWeight(r) as number;
+
       this.weightMap.delete(r);
     } );
 
@@ -60,6 +66,16 @@ export class Picker<T> implements IPicker<T> {
       ...DefaultPickOptions,
       ...options,
     };
+    const weightWithXElements: Record<number, number> = {};
+    const getMaxDartInteger: GetMaxDartInteger<T> = this.#simplePicker.options.removeOnPick
+    || currentPickOptions.filters
+      ? (d)=>{
+        if (weightWithXElements[d.length] === undefined)
+          weightWithXElements[d.length] = calcWeightOfData(d, this.getWeight.bind(this));
+
+        return weightWithXElements[d.length];
+      }
+      : ()=>this.weight;
     const pickProcess = new SimplePickerPickProcess( {
       data: this.#simplePicker.data,
       n,
@@ -72,6 +88,7 @@ export class Picker<T> implements IPicker<T> {
           getWeight: this.getWeight.bind(this),
         } );
       },
+      getMaxDartInteger,
     } );
     const ret = pickProcess.pick();
 
@@ -89,21 +106,22 @@ export class Picker<T> implements IPicker<T> {
 
   // eslint-disable-next-line accessor-pairs
   get weight(): number {
-    let size = 0;
+    if (this.#precalcWeight === undefined)
+      this.#precalcWeight = calcWeightOfData(this.#simplePicker.data, this.getWeight.bind(this));
 
-    this.#simplePicker.data.forEach((t) => {
-      const tWeight = this.getWeight(t) as number;
-
-      size += tWeight;
-    } );
-
-    return size;
+    return this.#precalcWeight;
   }
 
   put(item: T, weight: number = 1): Picker<T> {
-    this.#simplePicker.put(item);
-
     const newWeight = Math.max(0, weight);
+
+    if (this.#precalcWeight !== undefined) {
+      this.#precalcWeight += newWeight;
+
+      this.#precalcWeight -= this.weightMap.get(item) ?? 0;
+    }
+
+    this.#simplePicker.put(item);
 
     this.weightMap.set(item, newWeight);
 
@@ -123,6 +141,9 @@ export class Picker<T> implements IPicker<T> {
     const removed = this.#simplePicker.remove(obj);
 
     if (removed) {
+      if (this.#precalcWeight !== undefined)
+        this.#precalcWeight -= this.weightMap.get(removed) ?? 0;
+
       this.weightMap.delete(removed);
 
       return removed;
@@ -153,4 +174,16 @@ export class Picker<T> implements IPicker<T> {
     this.#simplePicker.clear();
     this.weightMap.clear();
   }
+}
+
+function calcWeightOfData<T>(data: T[], getWeight: (t: T)=> number | undefined): number {
+  let size = 0;
+
+  data.forEach((t) => {
+    const tWeight = getWeight(t) as number;
+
+    size += tWeight;
+  } );
+
+  return size;
 }

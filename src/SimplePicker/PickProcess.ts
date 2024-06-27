@@ -3,6 +3,8 @@ import { PickerOptions } from "../PickerOptions";
 import { ThrowDartFn } from "../ThrowDartFn";
 import { generateRandomInteger } from "../random";
 
+export type GetMaxDartInteger<T> = (data: T[])=> number;
+
 export type PickProcessProps<T, TD extends ThrowDartFn<T>> = {
   n: number;
   data: T[];
@@ -10,6 +12,7 @@ export type PickProcessProps<T, TD extends ThrowDartFn<T>> = {
   pickerOptions: Required<PickerOptions>;
   options: PickOptions<T>;
   throwDart: TD;
+  getMaxDartInteger: GetMaxDartInteger<T>;
 };
 
 export class PickProcess<T, TD extends ThrowDartFn<T>> {
@@ -130,7 +133,7 @@ export class PickProcess<T, TD extends ThrowDartFn<T>> {
       return undefined;
 
     const dart = generateRandomInteger( {
-      max: this.#props.data.length,
+      max: this.#props.getMaxDartInteger(this.#props.data),
       randomMode: this.#props.pickerOptions.randomMode,
     } );
     const ret = this.#props.throwDart( {
