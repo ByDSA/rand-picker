@@ -5,7 +5,7 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
+    "importHelpers": false,
     "inlineSources": true,
     "lib": ["dom", "ES2022"],
     "module": "NodeNext",
